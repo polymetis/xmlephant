@@ -1,4 +1,4 @@
-defmodule Xmlephant.Datatype do
+defmodule Xmlephant.Extension do
   @behaviour Postgrex.Extension
 
   def init(opts) do

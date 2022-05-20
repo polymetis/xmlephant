@@ -13,9 +13,13 @@ defmodule Xmlephant.MixProject do
       name: "Xmlephant",
       package: package(),
       docs: docs(),
-      deps: deps()
+      deps: deps(),
+      elixirc_paths: elixirc_paths(Mix.env())
     ]
   end
+
+  defp elixirc_paths(:test), do: ["lib", "test/support"]
+  defp elixirc_paths(_), do: ["lib"]
 
   # Run "mix help compile.app" to learn about applications.
   def application do
@@ -47,7 +51,7 @@ defmodule Xmlephant.MixProject do
     [
       extras: ["CHANGELOG.md", "README.md"],
       main: "readme",
-      source_url: @source_url,
+      source_url: @sourceurl,
       source_ref: "v#{@version}",
       formatters: ["html"]
     ]
