@@ -68,8 +68,8 @@ defmodule XmlephantTest do
                      """
                      SELECT xmltable.*
                      FROM xmlephant_test, XMLTABLE( XMLNAMESPACES('http://purl.org/rss/1.0/modules/content/' AS content,
-                                             'http://www.itunes.com/dtds/podcast-1.0.dtd' AS itunes),
-                                    'rss/channel/item' PASSING xml
+                                                                  'http://www.itunes.com/dtds/podcast-1.0.dtd' AS itunes),
+                                         'rss/channel/item' PASSING xml
                      COLUMNS
                        id FOR ORDINALITY,
                        title text PATH 'title',
