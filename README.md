@@ -34,7 +34,9 @@
              >>%%%%>>``%%%%%>>>>>'     `>%%%%%%.                           
              >>%%%%>> `@@a%%%%%%'     .%%%%%%%%%.                          
              `a@@a%@'    `%a@@'       `a@@a%</xml>
+             
 ```
+Ascii art by [Susie Oviatt](http://www.roysac.com/tutorial/susieasciiarttutorial.html) -placeholder link until I can find her in particular rather than just her work. 
 
 ## Installation
 
