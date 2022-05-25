@@ -28,4 +28,16 @@ defmodule XmlephantTest do
 
     {:ok, [xml: "<root>hello</root>"]}
   end
+
+  test "attempt to insert non xml as binary", context do
+    pid = context[:pid]
+    {:ok, _} =
+      Postgrex.query(pid,
+                     "CREATE TABLE xmlephant_test (id serial, xml xml)", [])
+
+    {:error,  %Postgrex.Error{postgres: %{code: :invalid_xml_content}}} =
+      Postgrex.query(pid,
+                     "INSERT INTO xmlephant_test (xml) VALUES ($1)", ["<root>hello</oot>"])
+
+  end
 end
