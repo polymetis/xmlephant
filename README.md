@@ -1,8 +1,8 @@
 # Xmlephant
 
 ```
-             <?xml version="1.0">.                                              
-           .>%%%%%%%%%%%%%%%%%%%%>,.                                       
+             <?xml version="1.0">                                              
+           <phant>%%%%%%%%%%%%%%%%%>,.                                       
          .>%%%%%%%%%%%%%%%%%%>>,%%%%%%;,.                                  
        .>>>>%%%%%%%%%%%%%>>,%%%%%%%%%%%%,>>%%,.                            
      .>>%>>>>%%%%%%%%%>>,%%%%%%%%%%%%%%%%%,>>%%%%%,.                       
@@ -33,7 +33,7 @@
             >>%%%%>>,:::,%%>>>>>>>>'   ;>%%%%%.                        ;%% 
              >>%%%%>>``%%%%%>>>>>'     `>%%%%%%.                           
              >>%%%%>> `@@a%%%%%%'     .%%%%%%%%%.                          
-             `a@@a%@'    `%a@@'       `a@@a%</xml>
+             `a@@a%@'    `%a@@'       `a@@a%</phant>
              
 ```
 Ascii art by [Susie Oviatt](http://www.roysac.com/tutorial/susieasciiarttutorial.html) -placeholder link until I can find her in particular rather than just her work. 
