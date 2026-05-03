@@ -1,0 +1,11 @@
+import Config
+
+config :xmlephant, Xmlephant.Test.Repo,
+  hostname: System.get_env("PG_HOSTNAME", "localhost"),
+  username: System.get_env("PG_USERNAME", "postgres"),
+  password: System.get_env("PG_PASSWORD", "postgres"),
+  database: System.get_env("PG_DATABASE", "xmlephant_test"),
+  types: Xmlephant.PostgrexTypes,
+  pool: Ecto.Adapters.SQL.Sandbox
+
+config :xmlephant, ecto_repos: [Xmlephant.Test.Repo]

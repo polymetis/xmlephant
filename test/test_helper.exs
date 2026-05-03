@@ -10,5 +10,8 @@ defmodule Xmlephant.Test.Helper do
   end
 end
 
+{:ok, _} = Application.ensure_all_started(:ecto_sql)
+{:ok, _} = Xmlephant.Test.Repo.start_link()
+Ecto.Adapters.SQL.Sandbox.mode(Xmlephant.Test.Repo, :manual)
 
 ExUnit.start()
