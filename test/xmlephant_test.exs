@@ -4,11 +4,6 @@ defmodule XmlephantTest do
 
   setup do
     {:ok, pid} = Postgrex.start_link(Xmlephant.Test.Helper.opts())
-
-    {:ok, _} =
-      Postgrex.query(pid,
-                     "DROP TABLE IF EXISTS xmlephant_test", [])
-
     {:ok, [pid: pid]}
   end
 
@@ -16,7 +11,7 @@ defmodule XmlephantTest do
     pid = context[:pid]
 
     {:ok, _} =
-      Postgrex.query(pid, "CREATE TABLE xmlephant_test (id serial, xml xml)", [])
+      Postgrex.query(pid, "CREATE TEMP TABLE xmlephant_test (id serial, xml xml)", [])
 
     {:ok, _} =
       Postgrex.query(pid,
@@ -33,7 +28,7 @@ defmodule XmlephantTest do
     pid = context[:pid]
     {:ok, _} =
       Postgrex.query(pid,
-                     "CREATE TABLE xmlephant_test (id serial, xml xml)", [])
+                     "CREATE TEMP TABLE xmlephant_test (id serial, xml xml)", [])
 
     {:error,  %Postgrex.Error{postgres: %{code: :invalid_xml_content}}} =
       Postgrex.query(pid,
@@ -46,7 +41,7 @@ defmodule XmlephantTest do
     {:ok, content} = File.read(Path.join(__DIR__, "fixtures/rocinante.xml"))
 
     {:ok, _} =
-      Postgrex.query(pid, "CREATE TABLE xmlephant_test (id serial, xml xml)", [])
+      Postgrex.query(pid, "CREATE TEMP TABLE xmlephant_test (id serial, xml xml)", [])
 
     {:ok, _} =
       Postgrex.query(pid,
