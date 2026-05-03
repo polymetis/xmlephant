@@ -55,8 +55,13 @@ defmodule Xmlephant.Extension do
   @impl Postgrex.Extension
   def encode(_state) do
     quote do
-      bin when is_binary(bin) ->
+      bin when is_binary(bin) and byte_size(bin) < 0x80000000 ->
         [<<byte_size(bin)::signed-size(32)>> | bin]
+
+      bin when is_binary(bin) ->
+        raise ArgumentError,
+              "Xmlephant.Extension xml binary too large: #{byte_size(bin)} bytes " <>
+                "exceeds the 2GB Postgres length-prefix limit"
 
       other ->
         raise ArgumentError,
