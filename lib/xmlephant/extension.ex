@@ -3,8 +3,12 @@ defmodule Xmlephant.Extension do
 
   def init(opts) do
     case Keyword.get(opts, :decode_binary, :copy) do
-      :copy -> :copy
-      :reference -> :reference
+      :copy ->
+        :copy
+
+      :reference ->
+        :reference
+
       other ->
         raise ArgumentError,
               "Xmlephant.Extension :decode_binary must be :copy or :reference, got: #{inspect(other)}"
