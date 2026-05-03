@@ -40,7 +40,7 @@ defmodule Xmlephant.MixProject do
 
   defp package do
     [
-      description: "Xmlephant allows you to work directly with xml directly in Postgres",
+      description: "A Postgrex extension for the PostgreSQL xml column type.",
       files: ["lib", "mix.exs", "README.md", "CHANGELOG.md", "LICENSE"],
       maintainers: ["Moisis Langley ('Ley) Missailidis"],
       licenses: ["MIT"],
