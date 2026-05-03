@@ -1,7 +1,7 @@
 defmodule Xmlephant.MixProject do
   use Mix.Project
 
-  @sourceurl "https://github.com/polymetis/xmlephant"
+  @source_url "https://github.com/polymetis/xmlephant"
   @version "0.1.0"
 
   def project do
@@ -42,7 +42,7 @@ defmodule Xmlephant.MixProject do
       files: ["lib", "mix.exs", "README.md", "CHANGELOG.md", "LICENSE"],
       maintainers: ["Moisis Langley ('Ley) Missailidis"],
       licenses: ["MIT"],
-      links: %{"GitHub" => @sourceurl}
+      links: %{"GitHub" => @source_url}
     ]
   end
 
@@ -50,7 +50,7 @@ defmodule Xmlephant.MixProject do
     [
       extras: ["CHANGELOG.md", "README.md"],
       main: "readme",
-      source_url: @sourceurl,
+      source_url: @source_url,
       source_ref: "v#{@version}",
       formatters: ["html"]
     ]
