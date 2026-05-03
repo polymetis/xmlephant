@@ -13,9 +13,11 @@ defmodule XmlephantTest do
       Postgrex.query(pid, "CREATE TEMP TABLE xmlephant_test (id serial, xml xml)", [])
 
     {:ok, _} =
-      Postgrex.query(pid,
-                     "INSERT INTO xmlephant_test (xml) VALUES ($1)",
-                     ["<root>hello</root>"])
+      Postgrex.query(
+        pid,
+        "INSERT INTO xmlephant_test (xml) VALUES ($1)",
+        ["<root>hello</root>"]
+      )
 
     {:ok, %Postgrex.Result{rows: [[xml]]}} =
       Postgrex.query(pid, "SELECT xml FROM xmlephant_test", [])
@@ -37,14 +39,18 @@ defmodule XmlephantTest do
 
     for {label, xml} <- cases do
       {:ok, _} =
-        Postgrex.query(pid,
-                       "INSERT INTO xmlephant_test (xml) VALUES ($1)",
-                       [xml])
+        Postgrex.query(
+          pid,
+          "INSERT INTO xmlephant_test (xml) VALUES ($1)",
+          [xml]
+        )
 
       {:ok, %Postgrex.Result{rows: [[got]]}} =
-        Postgrex.query(pid,
-                       "SELECT xml FROM xmlephant_test ORDER BY id DESC LIMIT 1",
-                       [])
+        Postgrex.query(
+          pid,
+          "SELECT xml FROM xmlephant_test ORDER BY id DESC LIMIT 1",
+          []
+        )
 
       assert got == xml,
              "round-trip mismatch for #{label}: sent #{inspect(xml)}, got #{inspect(got)}"
@@ -58,9 +64,11 @@ defmodule XmlephantTest do
       Postgrex.query(pid, "CREATE TEMP TABLE xmlephant_test (id serial, xml xml)", [])
 
     {:ok, _} =
-      Postgrex.query(pid,
-                     "INSERT INTO xmlephant_test (xml) VALUES ($1)",
-                     [nil])
+      Postgrex.query(
+        pid,
+        "INSERT INTO xmlephant_test (xml) VALUES ($1)",
+        [nil]
+      )
 
     {:ok, %Postgrex.Result{rows: [[xml]]}} =
       Postgrex.query(pid, "SELECT xml FROM xmlephant_test", [])
@@ -76,9 +84,11 @@ defmodule XmlephantTest do
       Postgrex.query(pid, "CREATE TEMP TABLE xmlephant_test (id serial, xml xml)", [])
 
     {:ok, _} =
-      Postgrex.query(pid,
-                     "INSERT INTO xmlephant_test (xml) VALUES ($1)",
-                     ["<root>hello</root>"])
+      Postgrex.query(
+        pid,
+        "INSERT INTO xmlephant_test (xml) VALUES ($1)",
+        ["<root>hello</root>"]
+      )
 
     {:ok, %Postgrex.Result{rows: [[xml]]}} =
       Postgrex.query(pid, "SELECT xml FROM xmlephant_test", [])
@@ -90,13 +100,14 @@ defmodule XmlephantTest do
     pid = context[:pid]
 
     {:ok, _} =
-      Postgrex.query(pid,
-                     "CREATE TEMP TABLE xmlephant_test (id serial, xml xml)", [])
+      Postgrex.query(pid, "CREATE TEMP TABLE xmlephant_test (id serial, xml xml)", [])
 
     assert {:error, %Postgrex.Error{postgres: %{code: :invalid_xml_content}}} =
-             Postgrex.query(pid,
-                            "INSERT INTO xmlephant_test (xml) VALUES ($1)",
-                            ["<root>hello</oot>"])
+             Postgrex.query(
+               pid,
+               "INSERT INTO xmlephant_test (xml) VALUES ($1)",
+               ["<root>hello</oot>"]
+             )
   end
 
   test "decodes inserted XML so XMLTABLE can extract typed columns", context do
@@ -107,25 +118,30 @@ defmodule XmlephantTest do
       Postgrex.query(pid, "CREATE TEMP TABLE xmlephant_test (id serial, xml xml)", [])
 
     {:ok, _} =
-      Postgrex.query(pid,
-                     "INSERT INTO xmlephant_test (xml) VALUES ($1)",
-                     [content])
+      Postgrex.query(
+        pid,
+        "INSERT INTO xmlephant_test (xml) VALUES ($1)",
+        [content]
+      )
 
     {:ok, %Postgrex.Result{rows: rows}} =
-      Postgrex.query(pid,
-                     """
-                     SELECT xmltable.*
-                     FROM xmlephant_test, XMLTABLE( XMLNAMESPACES('http://purl.org/rss/1.0/modules/content/' AS content,
-                                                                  'http://www.itunes.com/dtds/podcast-1.0.dtd' AS itunes),
-                                         'rss/channel/item' PASSING xml
-                     COLUMNS
-                       id FOR ORDINALITY,
-                       title text PATH 'title',
-                       guid text PATH 'guid',
-                       author text PATH 'itunes:author',
-                       file text PATH 'enclosure/@url',
-                       length interval PATH 'itunes:duration');
-                     """, [])
+      Postgrex.query(
+        pid,
+        """
+        SELECT xmltable.*
+        FROM xmlephant_test, XMLTABLE( XMLNAMESPACES('http://purl.org/rss/1.0/modules/content/' AS content,
+                                                     'http://www.itunes.com/dtds/podcast-1.0.dtd' AS itunes),
+                            'rss/channel/item' PASSING xml
+        COLUMNS
+          id FOR ORDINALITY,
+          title text PATH 'title',
+          guid text PATH 'guid',
+          author text PATH 'itunes:author',
+          file text PATH 'enclosure/@url',
+          length interval PATH 'itunes:duration');
+        """,
+        []
+      )
 
     assert length(rows) >= 2,
            "expected XMLTABLE to extract at least 2 items; got #{length(rows)}"
@@ -138,7 +154,7 @@ defmodule XmlephantTest do
              "theincomparable/salvage/41",
              "The Incomparable",
              "https://dts.podtrac.com/redirect.mp3/www.theincomparable.com/podcast/salvage41.mp3",
-             %Postgrex.Interval{days: 0, microsecs: 0, months: 0, secs: 198180}
+             %Postgrex.Interval{days: 0, microsecs: 0, months: 0, secs: 198_180}
            ]
 
     # Second row should have ordinal 2 and same publisher; proves iteration.

@@ -1,6 +1,7 @@
 Postgrex.Types.define(
   Xmlephant.PostgrexTypes,
-  [Xmlephant.Extension], []
+  [Xmlephant.Extension],
+  []
 )
 
 Postgrex.Types.define(
