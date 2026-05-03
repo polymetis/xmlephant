@@ -36,7 +36,7 @@
              `a@@a%@'    `%a@@'       `a@@a%</phant>
              
 ```
-Ascii art by [Susie Oviatt](http://www.roysac.com/tutorial/susieasciiarttutorial.html) -placeholder link until I can find her in particular rather than just her work. 
+Ascii art by Susie Oviatt; tutorial preserved at [roysac.com](http://www.roysac.com/tutorial/susieasciiarttutorial.html).
 
 ## What it does
 
