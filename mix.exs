@@ -42,7 +42,6 @@ defmodule Xmlephant.MixProject do
     [
       description: "A Postgrex extension for the PostgreSQL xml column type.",
       files: ["lib", "mix.exs", "README.md", "CHANGELOG.md", "LICENSE"],
-      maintainers: ["Moisis Langley ('Ley) Missailidis"],
       licenses: ["MIT"],
       links: %{"GitHub" => @source_url}
     ]
