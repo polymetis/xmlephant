@@ -41,29 +41,19 @@ defmodule XmlephantTest do
 
   end
 
-  test "query xml with xmltable", context do
+  test "decodes inserted XML so XMLTABLE can extract typed columns", context do
     pid = context[:pid]
-    {:ok, content} = File.read("test/fixtures/rocinante.xml")
+    {:ok, content} = File.read(Path.join(__DIR__, "fixtures/rocinante.xml"))
 
+    {:ok, _} =
+      Postgrex.query(pid, "CREATE TABLE xmlephant_test (id serial, xml xml)", [])
 
     {:ok, _} =
       Postgrex.query(pid,
-                     "CREATE TABLE xmlephant_test (id serial, xml xml)", [])
+                     "INSERT INTO xmlephant_test (xml) VALUES ($1)",
+                     [content])
 
-    {:ok, _} =
-      Postgrex.query(pid,
-                     "INSERT INTO xmlephant_test (xml) VALUES ($1)", [content])
-
-    {:ok, %Postgrex.Result{
-      rows: [
-        [
-          1,
-          "41: \"Babylon's Ashes\"",
-          "theincomparable/salvage/41",
-          "The Incomparable",
-          "https://dts.podtrac.com/redirect.mp3/www.theincomparable.com/podcast/salvage41.mp3",
-          %Postgrex.Interval{days: 0, microsecs: 0, months: 0, secs: 198180}
-        ] | _ ]}} =
+    {:ok, %Postgrex.Result{rows: rows}} =
       Postgrex.query(pid,
                      """
                      SELECT xmltable.*
@@ -79,5 +69,21 @@ defmodule XmlephantTest do
                        length interval PATH 'itunes:duration');
                      """, [])
 
+    assert length(rows) >= 2,
+           "expected XMLTABLE to extract at least 2 items; got #{length(rows)}"
+
+    [first, second | _] = rows
+
+    assert first == [
+             1,
+             "41: \"Babylon's Ashes\"",
+             "theincomparable/salvage/41",
+             "The Incomparable",
+             "https://dts.podtrac.com/redirect.mp3/www.theincomparable.com/podcast/salvage41.mp3",
+             %Postgrex.Interval{days: 0, microsecs: 0, months: 0, secs: 198180}
+           ]
+
+    # Second row should have ordinal 2 and same publisher; proves iteration.
+    assert [2, _title, _guid, "The Incomparable", _file, _length] = second
   end
 end
