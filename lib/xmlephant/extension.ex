@@ -19,6 +19,10 @@ defmodule Xmlephant.Extension do
     quote do
       bin when is_binary(bin) ->
         [<<byte_size(bin)::signed-size(32)>> | bin]
+
+      other ->
+        raise ArgumentError,
+              "Xmlephant.Extension expected a binary for the xml type, got: #{inspect(other)}"
     end
   end
 
