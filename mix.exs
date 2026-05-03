@@ -8,7 +8,7 @@ defmodule Xmlephant.MixProject do
     [
       app: :xmlephant,
       version: @version,
-      elixir: "~> 1.13",
+      elixir: "~> 1.18",
       start_permanent: Mix.env() == :prod,
       name: "Xmlephant",
       package: package(),
