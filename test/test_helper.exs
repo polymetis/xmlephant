@@ -1,5 +1,3 @@
-{:ok, _} = Application.ensure_all_started(:ecto_sql)
-
 defmodule Xmlephant.Test.Helper do
   def opts(types \\ Xmlephant.PostgrexTypes) do
     [
