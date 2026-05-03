@@ -41,7 +41,7 @@ defmodule Xmlephant.MixProject do
   defp package do
     [
       description: "A Postgrex extension for the PostgreSQL xml column type.",
-      files: ["lib", "mix.exs", "README.md", "CHANGELOG.md", "LICENSE"],
+      files: ["lib", "mix.exs", ".formatter.exs", "README.md", "CHANGELOG.md", "LICENSE"],
       licenses: ["MIT"],
       links: %{"GitHub" => @source_url}
     ]
