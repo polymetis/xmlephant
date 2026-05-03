@@ -99,7 +99,7 @@ PostgreSQL validates well-formedness on insert; malformed XML is rejected with `
 
 ## A note on untrusted XML
 
-This library is a byte passthrough — it does not parse XML in Elixir. PostgreSQL parses on insert (well-formedness only) and again whenever you call `xpath`, `XMLTABLE`, or `xmlexists`. libxml2 expands internal entities, so running XPath or XMLTABLE against attacker-controlled XML is a billion-laughs DoS vector. Treat untrusted XML the way you would in any other Postgres deployment.
+This library is a byte passthrough — it does not parse XML in Elixir. PostgreSQL parses on insert (well-formedness only) and again whenever you call `xpath`, `XMLTABLE`, or `xmlexists`. libxml2 expands internal entities, so running XPath or XMLTABLE against attacker-controlled XML is a billion-laughs DoS vector. Postgres exposes no knob to disable entity expansion; if you handle untrusted XML, sanitize or pre-parse it in your application before insert, and wrap server-side `xpath`/`XMLTABLE`/`xmlexists` calls in a `statement_timeout` so a malicious `<lol9>` payload cannot hold a backend hostage.
 
 ## Running the tests
 
