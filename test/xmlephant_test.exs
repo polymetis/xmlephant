@@ -24,6 +24,34 @@ defmodule XmlephantTest do
     assert xml == "<root>hello</root>"
   end
 
+  test "round-trips UTF-8 content, empty elements, and CDATA sections", context do
+    pid = context[:pid]
+
+    cases = [
+      utf8: "<root>héllo café 漢字</root>",
+      empty: "<root/>",
+      cdata: "<root><![CDATA[hello & goodbye <not-a-tag>]]></root>"
+    ]
+
+    {:ok, _} =
+      Postgrex.query(pid, "CREATE TEMP TABLE xmlephant_test (id serial, xml xml)", [])
+
+    for {label, xml} <- cases do
+      {:ok, _} =
+        Postgrex.query(pid,
+                       "INSERT INTO xmlephant_test (xml) VALUES ($1)",
+                       [xml])
+
+      {:ok, %Postgrex.Result{rows: [[got]]}} =
+        Postgrex.query(pid,
+                       "SELECT xml FROM xmlephant_test ORDER BY id DESC LIMIT 1",
+                       [])
+
+      assert got == xml,
+             "round-trip mismatch for #{label}: sent #{inspect(xml)}, got #{inspect(got)}"
+    end
+  end
+
   test "round-trips an XML binary when :decode_binary is :reference" do
     {:ok, pid} =
       Postgrex.start_link(Xmlephant.Test.Helper.opts(Xmlephant.PostgrexTypes.Reference))
