@@ -32,7 +32,8 @@ defmodule Xmlephant.MixProject do
   defp deps do
     [
       {:postgrex, "~> 0.22"},
-      {:ex_doc, ">= 0.0.0", only: :dev, runtime: false}
+      {:ex_doc, ">= 0.0.0", only: :dev, runtime: false},
+      {:ecto_sql, "~> 3.13", only: :test}
     ]
   end
 
