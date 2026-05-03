@@ -1,6 +1,8 @@
 defmodule Xmlephant.EctoTest do
   use ExUnit.Case, async: true
 
+  @moduletag :ecto
+
   alias Ecto.Adapters.SQL
   alias Xmlephant.Test.Repo
 

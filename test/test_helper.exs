@@ -10,8 +10,13 @@ defmodule Xmlephant.Test.Helper do
   end
 end
 
-{:ok, _} = Application.ensure_all_started(:ecto_sql)
-{:ok, _} = Xmlephant.Test.Repo.start_link()
-Ecto.Adapters.SQL.Sandbox.mode(Xmlephant.Test.Repo, :manual)
-
 ExUnit.start()
+
+# Skip booting the Ecto.Repo when the :ecto tag is excluded so isolated
+# runs of non-Ecto suites (e.g. `mix test --exclude ecto`) don't pay the
+# connection cost or require a live database.
+unless :ecto in (ExUnit.configuration()[:exclude] || []) do
+  {:ok, _} = Application.ensure_all_started(:ecto_sql)
+  {:ok, _} = Xmlephant.Test.Repo.start_link()
+  Ecto.Adapters.SQL.Sandbox.mode(Xmlephant.Test.Repo, :manual)
+end

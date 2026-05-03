@@ -8,7 +8,7 @@ defmodule Xmlephant.MixProject do
     [
       app: :xmlephant,
       version: @version,
-      elixir: "~> 1.18",
+      elixir: "~> 1.15",
       start_permanent: Mix.env() == :prod,
       name: "Xmlephant",
       package: package(),
@@ -33,16 +33,16 @@ defmodule Xmlephant.MixProject do
     [
       {:postgrex, "~> 0.22"},
       {:ex_doc, ">= 0.0.0", only: :dev, runtime: false},
-      {:ecto_sql, "~> 3.13", only: :test},
-      {:stream_data, "~> 1.0", only: :test}
+      {:ecto, "~> 3.10", only: [:dev, :test]},
+      {:ecto_sql, "~> 3.13", only: [:dev, :test]},
+      {:stream_data, "~> 1.0", only: [:dev, :test]}
     ]
   end
 
   defp package do
     [
-      description: "Xmlephant allows you to work directly with xml directly in Postgres",
-      files: ["lib", "mix.exs", "README.md", "CHANGELOG.md", "LICENSE"],
-      maintainers: ["Moisis Langley ('Ley) Missailidis"],
+      description: "A Postgrex extension for the PostgreSQL xml column type.",
+      files: ["lib", "mix.exs", ".formatter.exs", "README.md", "CHANGELOG.md", "LICENSE"],
       licenses: ["MIT"],
       links: %{"GitHub" => @source_url}
     ]
@@ -50,7 +50,7 @@ defmodule Xmlephant.MixProject do
 
   defp docs do
     [
-      extras: ["CHANGELOG.md", "README.md"],
+      extras: ["CHANGELOG.md", "README.md", "LICENSE"],
       main: "readme",
       source_url: @source_url,
       source_ref: "v#{@version}",
