@@ -51,6 +51,23 @@ defmodule XmlephantTest do
     end
   end
 
+  test "round-trips nil to SQL NULL", context do
+    pid = context[:pid]
+
+    {:ok, _} =
+      Postgrex.query(pid, "CREATE TEMP TABLE xmlephant_test (id serial, xml xml)", [])
+
+    {:ok, _} =
+      Postgrex.query(pid,
+                     "INSERT INTO xmlephant_test (xml) VALUES ($1)",
+                     [nil])
+
+    {:ok, %Postgrex.Result{rows: [[xml]]}} =
+      Postgrex.query(pid, "SELECT xml FROM xmlephant_test", [])
+
+    assert is_nil(xml)
+  end
+
   test "round-trips an XML binary when :decode_binary is :reference" do
     {:ok, pid} =
       Postgrex.start_link(Xmlephant.Test.Helper.opts(Xmlephant.PostgrexTypes.Reference))
