@@ -101,6 +101,17 @@ PostgreSQL validates well-formedness on insert; malformed XML is rejected with `
 
 This library is a byte passthrough — it does not parse XML in Elixir. PostgreSQL parses on insert (well-formedness only) and again whenever you call `xpath`, `XMLTABLE`, or `xmlexists`. libxml2 expands internal entities, so running XPath or XMLTABLE against attacker-controlled XML is a billion-laughs DoS vector. Treat untrusted XML the way you would in any other Postgres deployment.
 
+## Running the tests
+
+The suite hits a real PostgreSQL. Defaults assume `postgres`/`postgres` on `localhost:5432` and a database called `xmlephant_test`; override any of them with environment variables.
+
+```sh
+bin/test_database_setup   # creates the test database
+mix test
+```
+
+Recognised env vars (with defaults): `PG_HOSTNAME` (`localhost`), `PG_USERNAME` (`postgres`), `PG_PASSWORD` (`postgres`), `PG_DATABASE` (`xmlephant_test`).
+
 ## Documentation
 
 Full docs at [hexdocs.pm/xmlephant](https://hexdocs.pm/xmlephant).

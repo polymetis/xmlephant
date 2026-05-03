@@ -3,10 +3,10 @@
 defmodule Xmlephant.Test.Helper do
   def opts do
     [
-      hostname: "localhost",
-      username: "postgres",
-      password: "postgres",
-      database: "xmlephant_test",
+      hostname: System.get_env("PG_HOSTNAME", "localhost"),
+      username: System.get_env("PG_USERNAME", "postgres"),
+      password: System.get_env("PG_PASSWORD", "postgres"),
+      database: System.get_env("PG_DATABASE", "xmlephant_test"),
       types: Xmlephant.PostgrexTypes
     ]
   end
