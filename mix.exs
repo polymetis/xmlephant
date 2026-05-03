@@ -33,7 +33,7 @@ defmodule Xmlephant.MixProject do
     [
       {:postgrex, "~> 0.22"},
       {:ex_doc, ">= 0.0.0", only: :dev, runtime: false},
-      {:ecto_sql, "~> 3.0", optional: true, only: :test}
+      {:ecto_sql, "~> 3.13", optional: true, only: :test}
     ]
   end
 
