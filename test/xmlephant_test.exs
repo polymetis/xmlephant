@@ -12,21 +12,21 @@ defmodule XmlephantTest do
     {:ok, [pid: pid]}
   end
 
-  test "insert xml as binary", context do
+  test "round-trips an XML binary through INSERT and SELECT", context do
     pid = context[:pid]
+
     {:ok, _} =
-      Postgrex.query(pid,
-                     "CREATE TABLE xmlephant_test (id serial, xml xml)", [])
+      Postgrex.query(pid, "CREATE TABLE xmlephant_test (id serial, xml xml)", [])
 
     {:ok, _} =
       Postgrex.query(pid,
-                     "INSERT INTO xmlephant_test (xml) VALUES ($1)", ["<root>hello</root>"])
+                     "INSERT INTO xmlephant_test (xml) VALUES ($1)",
+                     ["<root>hello</root>"])
 
-    {:ok, _} =
-      Postgrex.query(pid,
-                     "SELECT xml FROM xmlephant_test", [])
+    {:ok, %Postgrex.Result{rows: [[xml]]}} =
+      Postgrex.query(pid, "SELECT xml FROM xmlephant_test", [])
 
-    {:ok, [xml: "<root>hello</root>"]}
+    assert xml == "<root>hello</root>"
   end
 
   test "attempt to insert non xml as binary", context do
