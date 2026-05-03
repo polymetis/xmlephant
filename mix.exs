@@ -49,7 +49,7 @@ defmodule Xmlephant.MixProject do
 
   defp docs do
     [
-      extras: ["CHANGELOG.md", "README.md"],
+      extras: ["CHANGELOG.md", "README.md", "LICENSE"],
       main: "readme",
       source_url: @source_url,
       source_ref: "v#{@version}",
