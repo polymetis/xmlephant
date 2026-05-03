@@ -2,7 +2,7 @@ defmodule Xmlephant.Extension do
   @behaviour Postgrex.Extension
 
   def init(opts) do
-    Keyword.get(opts, :decode_copy, :copy)
+    Keyword.get(opts, :decode_binary, :copy)
   end
 
   def matching(_state), do: [type: "xml"]

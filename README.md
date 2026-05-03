@@ -95,7 +95,7 @@ PostgreSQL validates well-formedness on insert; malformed XML is rejected with `
 
 ## Options
 
-- `:decode_copy` — `:copy` (default) or `:reference`. Controls whether decoded values are copied off the receive buffer. `:reference` avoids the copy when you'll process the value before the connection's next message; otherwise stick with the default.
+- `:decode_binary` — `:copy` (default) or `:reference`. Controls whether decoded values are copied off the receive buffer. `:reference` avoids the copy when you'll process the value before the connection's next message; otherwise stick with the default. Same name and semantics as Postgrex's built-in binary extension.
 
 ## A note on untrusted XML
 
