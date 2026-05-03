@@ -2,7 +2,13 @@ defmodule Xmlephant.Extension do
   @behaviour Postgrex.Extension
 
   def init(opts) do
-    Keyword.get(opts, :decode_copy, :copy)
+    case Keyword.get(opts, :decode_binary, :copy) do
+      :copy -> :copy
+      :reference -> :reference
+      other ->
+        raise ArgumentError,
+              "Xmlephant.Extension :decode_binary must be :copy or :reference, got: #{inspect(other)}"
+    end
   end
 
   def matching(_state), do: [type: "xml"]
@@ -13,6 +19,10 @@ defmodule Xmlephant.Extension do
     quote do
       bin when is_binary(bin) ->
         [<<byte_size(bin)::signed-size(32)>> | bin]
+
+      other ->
+        raise ArgumentError,
+              "Xmlephant.Extension expected a binary for the xml type, got: #{inspect(other)}"
     end
   end
 

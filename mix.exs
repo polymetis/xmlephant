@@ -1,14 +1,14 @@
 defmodule Xmlephant.MixProject do
   use Mix.Project
 
-  @sourceurl "https://github.com/polymetis/xmlephant"
-  @version "0.0.1"
+  @source_url "https://github.com/polymetis/xmlephant"
+  @version "0.1.0"
 
   def project do
     [
       app: :xmlephant,
       version: @version,
-      elixir: "~> 1.13",
+      elixir: "~> 1.18",
       start_permanent: Mix.env() == :prod,
       name: "Xmlephant",
       package: package(),
@@ -31,19 +31,18 @@ defmodule Xmlephant.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:postgrex, ">= 0.0.0"},
-      {:ex_doc, ">= 0.0.0", only: :dev, runtime: false},
-      {:ecto_sql, "~> 3.0", optional: true, only: :test}
+      {:postgrex, "~> 0.22"},
+      {:ex_doc, ">= 0.0.0", only: :dev, runtime: false}
     ]
   end
 
   defp package do
     [
       description: "Xmlephant allows you to work directly with xml directly in Postgres",
-      files: ["lib", "mix.exs", "README.md", "CHANGELOG.md"],
+      files: ["lib", "mix.exs", "README.md", "CHANGELOG.md", "LICENSE"],
       maintainers: ["Moisis Langley ('Ley) Missailidis"],
       licenses: ["MIT"],
-      links: %{"GitHub" => @sourceurl}
+      links: %{"GitHub" => @source_url}
     ]
   end
 
@@ -51,7 +50,7 @@ defmodule Xmlephant.MixProject do
     [
       extras: ["CHANGELOG.md", "README.md"],
       main: "readme",
-      source_url: @sourceurl,
+      source_url: @source_url,
       source_ref: "v#{@version}",
       formatters: ["html"]
     ]

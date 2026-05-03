@@ -1,3 +1,7 @@
 #!/usr/bin/env bash
+set -euo pipefail
 
-psql -c 'CREATE DATABASE xmlephant_test;' -U postgres
+PGPASSWORD="${PG_PASSWORD:-postgres}" psql \
+  -h "${PG_HOSTNAME:-localhost}" \
+  -U "${PG_USERNAME:-postgres}" \
+  -c "CREATE DATABASE ${PG_DATABASE:-xmlephant_test};"
