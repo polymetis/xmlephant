@@ -2,7 +2,7 @@ defmodule Xmlephant.MixProject do
   use Mix.Project
 
   @sourceurl "https://github.com/polymetis/xmlephant"
-  @version "0.0.1"
+  @version "0.1.0"
 
   def project do
     [
