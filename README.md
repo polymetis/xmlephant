@@ -36,7 +36,7 @@
              `a@@a%@'    `%a@@'       `a@@a%</phant>
              
 ```
-Ascii art by [Susie Oviatt](http://www.roysac.com/tutorial/susieasciiarttutorial.html) -placeholder link until I can find her in particular rather than just her work. 
+Ascii art by Susie Oviatt; tutorial preserved at [roysac.com](http://www.roysac.com/tutorial/susieasciiarttutorial.html).
 
 ## What it does
 
@@ -95,11 +95,11 @@ PostgreSQL validates well-formedness on insert; malformed XML is rejected with `
 
 ## Options
 
-- `:decode_binary` — `:copy` (default) or `:reference`. Controls whether decoded values are copied off the receive buffer. `:reference` avoids the copy when you'll process the value before the connection's next message; otherwise stick with the default. Same name and semantics as Postgrex's built-in binary extension.
+- `:decode_binary` — `:copy` (default) or `:reference`. With `:reference` the decoded value is a sub-binary pointing into Postgrex's receive buffer, and that buffer is reused on the next message — retaining the value across messages (storing it in process state, putting it in ETS, sending it to another process) without first calling `:binary.copy/1` reads garbage or crashes the VM. Default to `:copy`; only choose `:reference` when you've measured a copy bottleneck and you fully consume the value inside the same checkout. Same name and semantics as Postgrex's built-in binary extension.
 
 ## A note on untrusted XML
 
-This library is a byte passthrough — it does not parse XML in Elixir. PostgreSQL parses on insert (well-formedness only) and again whenever you call `xpath`, `XMLTABLE`, or `xmlexists`. libxml2 expands internal entities, so running XPath or XMLTABLE against attacker-controlled XML is a billion-laughs DoS vector. Treat untrusted XML the way you would in any other Postgres deployment.
+This library is a byte passthrough — it does not parse XML in Elixir. PostgreSQL parses on insert (well-formedness only) and again whenever you call `xpath`, `XMLTABLE`, or `xmlexists`. libxml2 expands internal entities, so running XPath or XMLTABLE against attacker-controlled XML is a billion-laughs DoS vector. Postgres exposes no knob to disable entity expansion; if you handle untrusted XML, sanitize or pre-parse it in your application before insert, and wrap server-side `xpath`/`XMLTABLE`/`xmlexists` calls in a `statement_timeout` so a malicious `<lol9>` payload cannot hold a backend hostage.
 
 ## Running the tests
 
