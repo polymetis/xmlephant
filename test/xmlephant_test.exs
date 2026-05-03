@@ -86,16 +86,17 @@ defmodule XmlephantTest do
     assert xml == "<root>hello</root>"
   end
 
-  test "attempt to insert non xml as binary", context do
+  test "rejects malformed XML with :invalid_xml_content", context do
     pid = context[:pid]
+
     {:ok, _} =
       Postgrex.query(pid,
                      "CREATE TEMP TABLE xmlephant_test (id serial, xml xml)", [])
 
-    {:error,  %Postgrex.Error{postgres: %{code: :invalid_xml_content}}} =
-      Postgrex.query(pid,
-                     "INSERT INTO xmlephant_test (xml) VALUES ($1)", ["<root>hello</oot>"])
-
+    assert {:error, %Postgrex.Error{postgres: %{code: :invalid_xml_content}}} =
+             Postgrex.query(pid,
+                            "INSERT INTO xmlephant_test (xml) VALUES ($1)",
+                            ["<root>hello</oot>"])
   end
 
   test "decodes inserted XML so XMLTABLE can extract typed columns", context do
