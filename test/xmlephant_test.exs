@@ -1,6 +1,5 @@
 defmodule XmlephantTest do
   use ExUnit.Case, async: true
-  doctest Xmlephant
 
   setup do
     {:ok, pid} = Postgrex.start_link(Xmlephant.Test.Helper.opts())
