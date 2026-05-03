@@ -31,7 +31,7 @@ defmodule Xmlephant.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:postgrex, "~> 0.16"},
+      {:postgrex, "~> 0.22"},
       {:ex_doc, ">= 0.0.0", only: :dev, runtime: false},
       {:ecto_sql, "~> 3.0", optional: true, only: :test}
     ]
