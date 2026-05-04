@@ -1,5 +1,10 @@
 # XMLephant
 
+[![Hex.pm](https://img.shields.io/hexpm/v/xmlephant.svg)](https://hex.pm/packages/xmlephant)
+[![HexDocs](https://img.shields.io/badge/hex-docs-lightgreen.svg)](https://hexdocs.pm/xmlephant)
+[![CI](https://github.com/polymetis/xmlephant/actions/workflows/ci.yml/badge.svg)](https://github.com/polymetis/xmlephant/actions/workflows/ci.yml)
+[![License](https://img.shields.io/hexpm/l/xmlephant.svg)](https://github.com/polymetis/xmlephant/blob/main/LICENSE)
+
 ```
              <?xml version="1.0">                                              
            <phant>%%%%%%%%%%%%%%%%%>,.                                       
