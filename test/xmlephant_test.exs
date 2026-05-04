@@ -77,8 +77,8 @@ defmodule XmlephantTest do
   end
 
   test "round-trips an XML binary when :decode_binary is :reference" do
-    {:ok, pid} =
-      Postgrex.start_link(Xmlephant.Test.Helper.opts(Xmlephant.PostgrexTypes.Reference))
+    pid =
+      start_supervised!({Postgrex, Xmlephant.Test.Helper.opts(Xmlephant.PostgrexTypes.Reference)})
 
     {:ok, _} =
       Postgrex.query(pid, "CREATE TEMP TABLE xmlephant_test (id serial, xml xml)", [])
