@@ -31,6 +31,7 @@ defmodule Xmlephant.Extension do
 
   @behaviour Postgrex.Extension
 
+  @doc false
   @impl Postgrex.Extension
   def init(opts) do
     case Keyword.get(opts, :decode_binary, :copy) do
@@ -46,12 +47,15 @@ defmodule Xmlephant.Extension do
     end
   end
 
+  @doc false
   @impl Postgrex.Extension
   def matching(_state), do: [type: "xml"]
 
+  @doc false
   @impl Postgrex.Extension
   def format(_state), do: :text
 
+  @doc false
   @impl Postgrex.Extension
   def encode(_state) do
     quote do
@@ -69,6 +73,7 @@ defmodule Xmlephant.Extension do
     end
   end
 
+  @doc false
   @impl Postgrex.Extension
   def decode(:reference) do
     quote do
