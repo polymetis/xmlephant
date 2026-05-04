@@ -9,7 +9,7 @@ defmodule Xmlephant.MixProject do
       app: :xmlephant,
       version: @version,
       elixir: "~> 1.15",
-      name: "Xmlephant",
+      source_url: @source_url,
       package: package(),
       docs: docs(),
       deps: deps(),
@@ -49,7 +49,7 @@ defmodule Xmlephant.MixProject do
 
   defp docs do
     [
-      extras: ["CHANGELOG.md", "README.md", "LICENSE"],
+      extras: ["README.md", "CHANGELOG.md", "LICENSE"],
       main: "readme",
       source_url: @source_url,
       source_ref: "v#{@version}",
